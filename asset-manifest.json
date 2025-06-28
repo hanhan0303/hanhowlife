@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/hanhan0303/hanhowlife/static/css/main.f5773aff.css",
-    "main.js": "/hanhan0303/hanhowlife/static/js/main.dac12549.js",
-    "static/js/453.22db2aab.chunk.js": "/hanhan0303/hanhowlife/static/js/453.22db2aab.chunk.js",
-    "static/media/coupon-alert.jpg": "/hanhan0303/hanhowlife/static/media/coupon-alert.423efe5f27b22f808116.jpg",
-    "static/media/index-banner.png": "/hanhan0303/hanhowlife/static/media/index-banner.66103027eb5ce9b26d3d.png",
-    "static/media/index-natural-ingredients.jpg": "/hanhan0303/hanhowlife/static/media/index-natural-ingredients.9958ffc509be65c294d0.jpg",
-    "static/media/page-banner.png": "/hanhan0303/hanhowlife/static/media/page-banner.1991ab29b4f425a3d61d.png",
-    "static/media/success-banner.png": "/hanhan0303/hanhowlife/static/media/success-banner.b58b1ff6e6e0390a0cb9.png",
-    "static/media/bootstrap-icons.woff?": "/hanhan0303/hanhowlife/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
-    "static/media/index-healthy-delicious.jpg": "/hanhan0303/hanhowlife/static/media/index-healthy-delicious.ebf03ac2093d9ee66037.jpg",
-    "static/media/bootstrap-icons.woff2?": "/hanhan0303/hanhowlife/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
-    "static/media/crystal-care.jpg": "/hanhan0303/hanhowlife/static/media/crystal-care.ab1ae1ef57ee0ce85001.jpg",
-    "static/media/crystal.png": "/hanhan0303/hanhowlife/static/media/crystal.24753628a83258617fd5.png",
-    "static/media/star.png": "/hanhan0303/hanhowlife/static/media/star.671abf90928e75853657.png",
-    "static/media/info-icon.png": "/hanhan0303/hanhowlife/static/media/info-icon.812a18cd491f158a3f03.png",
-    "static/media/logo.jpg": "/hanhan0303/hanhowlife/static/media/logo.aef3b5a4f86eeca7e6d6.jpg",
-    "index.html": "/hanhan0303/hanhowlife/index.html",
-    "main.f5773aff.css.map": "/hanhan0303/hanhowlife/static/css/main.f5773aff.css.map",
-    "main.dac12549.js.map": "/hanhan0303/hanhowlife/static/js/main.dac12549.js.map",
-    "453.22db2aab.chunk.js.map": "/hanhan0303/hanhowlife/static/js/453.22db2aab.chunk.js.map"
+    "main.css": "/hanhowlife/static/css/main.6ede6ed9.css",
+    "main.js": "/hanhowlife/static/js/main.cb6f79c2.js",
+    "static/js/453.22db2aab.chunk.js": "/hanhowlife/static/js/453.22db2aab.chunk.js",
+    "static/media/coupon-alert.jpg": "/hanhowlife/static/media/coupon-alert.423efe5f27b22f808116.jpg",
+    "static/media/index-banner.png": "/hanhowlife/static/media/index-banner.66103027eb5ce9b26d3d.png",
+    "static/media/index-natural-ingredients.jpg": "/hanhowlife/static/media/index-natural-ingredients.9958ffc509be65c294d0.jpg",
+    "static/media/page-banner.png": "/hanhowlife/static/media/page-banner.1991ab29b4f425a3d61d.png",
+    "static/media/success-banner.png": "/hanhowlife/static/media/success-banner.b58b1ff6e6e0390a0cb9.png",
+    "static/media/bootstrap-icons.woff?": "/hanhowlife/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
+    "static/media/index-healthy-delicious.jpg": "/hanhowlife/static/media/index-healthy-delicious.ebf03ac2093d9ee66037.jpg",
+    "static/media/bootstrap-icons.woff2?": "/hanhowlife/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
+    "static/media/crystal-care.jpg": "/hanhowlife/static/media/crystal-care.ab1ae1ef57ee0ce85001.jpg",
+    "static/media/crystal.png": "/hanhowlife/static/media/crystal.24753628a83258617fd5.png",
+    "static/media/star.png": "/hanhowlife/static/media/star.671abf90928e75853657.png",
+    "static/media/info-icon.png": "/hanhowlife/static/media/info-icon.812a18cd491f158a3f03.png",
+    "static/media/logo.jpg": "/hanhowlife/static/media/logo.aef3b5a4f86eeca7e6d6.jpg",
+    "index.html": "/hanhowlife/index.html",
+    "main.6ede6ed9.css.map": "/hanhowlife/static/css/main.6ede6ed9.css.map",
+    "main.cb6f79c2.js.map": "/hanhowlife/static/js/main.cb6f79c2.js.map",
+    "453.22db2aab.chunk.js.map": "/hanhowlife/static/js/453.22db2aab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f5773aff.css",
-    "static/js/main.dac12549.js"
+    "static/css/main.6ede6ed9.css",
+    "static/js/main.cb6f79c2.js"
   ]
 }
