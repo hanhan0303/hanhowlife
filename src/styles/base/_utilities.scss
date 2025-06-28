@@ -236,3 +236,15 @@ $backgroundColor: #fffcf7;
     }
   }
 }
+
+#scrollTop {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  z-index: $zIndex-4;
+  cursor: pointer;
+  .bi-caret-up-square-fill {
+    color: rgba(139, 145, 181, 0.8);
+    font-size: 40px;
+  }
+}

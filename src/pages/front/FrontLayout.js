@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import ScrollTopButton from '../../components/ScrollTopButton';
 
 export default function FrontLayout() {
   const [cartData, setCartData] = useState({});
@@ -65,6 +66,7 @@ export default function FrontLayout() {
             </ul>
           </div>
         </footer>
+        <ScrollTopButton />
       </div>
     </>
   );

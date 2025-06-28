@@ -13,7 +13,7 @@ export default function Navbar({ cartData }) {
   const totalQty = cartData?.carts?.reduce((acc, item) => {
     return acc + item.qty;
   }, 0);
-
+  console.log('購物車數量', totalQty);
   const showMobNav = () => {
     if (navShow) {
       setNavShow(false);

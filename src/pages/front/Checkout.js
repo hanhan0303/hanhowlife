@@ -4,7 +4,7 @@ import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { Input } from '../../components/FormElements';
 
 export default function Checkout() {
-  const { cartData } = useOutletContext();
+  const { cartData, getCart } = useOutletContext();
   const {
     register,
     handleSubmit,
@@ -30,6 +30,7 @@ export default function Checkout() {
       form,
     );
     console.log('useForm', res);
+    getCart();
     navigate(`/success/${res.data.orderId}`);
   };
 

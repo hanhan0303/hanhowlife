@@ -48,6 +48,7 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getProduct(id);
   }, [id]);
 
