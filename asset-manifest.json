@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/hanhowlife/static/css/main.9624076e.css",
-    "main.js": "/hanhowlife/static/js/main.108bce17.js",
+    "main.js": "/hanhowlife/static/js/main.412e7a40.js",
     "static/js/453.22db2aab.chunk.js": "/hanhowlife/static/js/453.22db2aab.chunk.js",
     "static/media/coupon-alert.jpg": "/hanhowlife/static/media/coupon-alert.423efe5f27b22f808116.jpg",
     "static/media/index-banner.png": "/hanhowlife/static/media/index-banner.66103027eb5ce9b26d3d.png",
@@ -18,11 +18,11 @@
     "static/media/logo.jpg": "/hanhowlife/static/media/logo.aef3b5a4f86eeca7e6d6.jpg",
     "index.html": "/hanhowlife/index.html",
     "main.9624076e.css.map": "/hanhowlife/static/css/main.9624076e.css.map",
-    "main.108bce17.js.map": "/hanhowlife/static/js/main.108bce17.js.map",
+    "main.412e7a40.js.map": "/hanhowlife/static/js/main.412e7a40.js.map",
     "453.22db2aab.chunk.js.map": "/hanhowlife/static/js/453.22db2aab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9624076e.css",
-    "static/js/main.108bce17.js"
+    "static/js/main.412e7a40.js"
   ]
 }
