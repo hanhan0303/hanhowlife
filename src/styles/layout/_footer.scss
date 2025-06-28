@@ -1,0 +1,48 @@
+.footer {
+  .footer-text {
+    color: $secondary;
+    transition: all 0.1s;
+    font-size: 14px;
+    letter-spacing: 1px;
+    overflow: hidden;
+    .line {
+      pointer-events: none;
+      @media (max-width: 576px) {
+        display: block;
+        transform: rotate(90deg);
+      }
+    }
+    .footer-loginBtn {
+      &:hover {
+        color: #8b91b5;
+      }
+      @media (max-width: 576px) {
+        display: block;
+      }
+    }
+  }
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    .footer-icon {
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        color: $secondary;
+        border: 1px solid rgba(108, 117, 125, 0.5);
+        border-radius: 50%;
+        overflow: hidden;
+        &:hover {
+          border: 1px solid $secondary;
+          color: #8b91b5;
+        }
+      }
+    }
+  }
+}

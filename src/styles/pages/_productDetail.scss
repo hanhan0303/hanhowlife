@@ -1,0 +1,199 @@
+.product-info {
+  .list-unstyled {
+    .info-icon {
+      width: 25px;
+      height: 20px;
+    }
+  }
+}
+
+.product {
+  margin-bottom: 50px;
+  @media (max-width: 767px) {
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+    color: #6c757d;
+  }
+  .product-photos {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .photo-lg {
+      margin-bottom: 1em;
+      height: calc(30vw - 2em);
+      max-height: 400px;
+      min-height: 340px;
+      @media (max-width: 767px) {
+        height: calc(100vw - 2em);
+        min-height: 250px;
+        max-height: 250px;
+      }
+    }
+    .photo-img {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+      background-position: center 60%;
+    }
+    .photo-sm {
+      height: calc(10vw - 0.66667em);
+      min-height: 113.33333px;
+      max-height: 83.33333px;
+      @media (max-width: 767px) {
+        height: calc(33.33333vw - 0.66667em);
+      }
+      & + .photo-sm {
+        padding-left: 1em;
+      }
+      &.active .photo-img::after,
+      &:hover .photo-img::after {
+        opacity: 0;
+      }
+
+      .photo-img::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: rgba(33, 37, 41, 0.3);
+        opacity: 1;
+        transition: all 0.15s;
+        cursor: pointer;
+        @media (max-width: 767px) {
+          opacity: 0;
+        }
+      }
+    }
+  }
+  .product-content {
+    padding: 0 3rem;
+    @media (max-width: 767px) {
+      padding: 0 1rem;
+    }
+    .path {
+      color: #6c757d;
+      .breadcrumb-link {
+        text-decoration: none;
+        color: #6c757d;
+        transition: all 0.1s;
+        &.active {
+          color: #414666;
+        }
+      }
+    }
+    .product-desc {
+      font-weight: 350;
+      line-height: 2;
+    }
+    .product-desc-secondary {
+      font-size: 0.875rem;
+      color: #5d7fe3;
+    }
+    .product-price {
+      span {
+        color: #e35d6a;
+        font-size: 2rem;
+        margin-right: 1rem;
+      }
+      small {
+        color: #495057;
+        font-size: 1.5rem;
+      }
+      .del {
+        color: #6c757d;
+        font-size: 1rem;
+        text-decoration: line-through;
+      }
+    }
+    .product-btns {
+      .product-quantity {
+        border: 1px solid #adb5bd;
+        color: #676b85;
+        font-weight: 500;
+        padding: 1rem;
+        background: transparent;
+        border-radius: 0;
+        font-size: 1rem;
+        width: 100%;
+        line-height: 1.5;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        &:hover,
+        &:focus {
+          color: #414666;
+          border-color: #414666;
+          outline: 0;
+          box-shadow: none;
+        }
+      }
+      .btn {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.product-info {
+  background: rgba(237, 235, 234, 0.6);
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    .product-info-text {
+      flex: 1;
+      @media (max-width: 1024px) {
+        flex: 2;
+      }
+      .list-unstyled {
+        .list-item {
+          position: relative;
+          padding-left: 2em;
+        }
+        .fa-li {
+          position: absolute;
+          top: 0;
+          left: 0;
+          text-align: center;
+          width: 1.5em;
+          line-height: inherit;
+        }
+      }
+    }
+
+    .bg-notice {
+      position: relative;
+      flex: 1;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: $zIndex-2;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #5a504b;
+        opacity: 0.3;
+      }
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    }
+  }
+}

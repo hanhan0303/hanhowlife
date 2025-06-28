@@ -1,0 +1,238 @@
+$zIndex-1: 1;
+$zIndex-2: 2;
+$zIndex-3: 3;
+$zIndex-4: 4;
+$zIndex-5: 5;
+$zIndex-6: 6;
+$zIndex-7: 7;
+$zIndex-1021: 1021;
+
+/*bootstrap sticky-top zindex 1020*/
+
+$backgroundColor: #fffcf7;
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $zIndex-7;
+  background-color: rgba(33, 37, 41, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .loading-animation {
+    width: 100%;
+    height: 100%;
+  }
+  &.loading-hide {
+    opacity: 0;
+    transition: all 0.5s linear;
+    transition-delay: 1s;
+  }
+}
+.product-addBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 2px;
+  border-radius: 0px;
+  overflow: hidden;
+  min-width: 108px;
+  span {
+    color: #ffffff;
+  }
+  .dark-text {
+    color: $primary;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .btnText {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+.bounceBall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  min-height: 20px;
+  &.dark-text {
+    span {
+      background-color: $primary;
+    }
+  }
+  span {
+    display: inline-block;
+    background-color: #ffffff;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    animation: bounceBall 0.45s cubic-bezier(0, 0, 0.15, 1) infinite alternate;
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+
+  @keyframes bounceBall {
+    0% {
+      transform: translateY(50%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+}
+.container {
+  max-width: 1200px;
+  @media (max-width: 767px) {
+    max-width: 540px;
+  }
+  @media (max-width: 576px) {
+    max-width: 100%;
+  }
+}
+.front {
+  background: $backgroundColor;
+}
+.object-cover {
+  object-fit: cover;
+}
+.logoImg {
+  width: auto;
+  height: 40px;
+}
+
+.bg-cover {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55vh;
+  min-height: 20rem;
+  background-attachment: fixed;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: $zIndex-1;
+  }
+  & > * {
+    z-index: $zIndex-2;
+  }
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(20%);
+  transition: all 0.8s ease;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}
+.product-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 70%;
+  display: block;
+  height: 300px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  @media (max-width: 767px) {
+    background-position: center 60%;
+    height: 280px;
+  }
+  .sale {
+    position: absolute;
+    right: 0;
+    background: #f8f9fa;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #ea868f;
+    z-index: $zIndex-2;
+  }
+  .link-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: calc(100% - 2rem);
+    background: #fff;
+    color: $primary;
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(33, 37, 41, 0.1);
+    font-size: 0.875rem;
+    transition: all 0.3s ease-out;
+    z-index: $zIndex-2;
+    transform: translate(-50%, 10%);
+    opacity: 0;
+    @media (max-width: 767px) {
+      transform: translate(-50%);
+      opacity: 1;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(33, 37, 41, 0.5);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover {
+    .link-btn {
+      transform: translate(-50%);
+      opacity: 1;
+    }
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+.product-body {
+  text-align: center;
+  .product-title {
+    font-weight: 500;
+  }
+  .product-price {
+    span {
+      color: #e35d6a;
+      font-weight: 500;
+    }
+    small {
+      color: $secondary;
+      font-size: 0.875rem;
+      &.del {
+        text-decoration: line-through;
+      }
+    }
+  }
+}

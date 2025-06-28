@@ -1,0 +1,209 @@
+.header-navbar {
+  .coupon-news {
+    .news {
+      .newsCont {
+        position: relative;
+        background-color: #d1aca6;
+        padding: 5px 40px 5px 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        @media (max-width: 767px) {
+          flex-direction: column;
+          gap: 5px;
+        }
+        p {
+          margin: 0;
+          font-weight: 300;
+          letter-spacing: 2px;
+          color: #fefefe;
+        }
+        .btn {
+          transition: 0.15s;
+          border: 1px solid #fefefe;
+          color: #fefefe;
+          border-radius: 5px;
+          &:hover {
+            background-color: #d5978e;
+          }
+        }
+        .newsCont-closeBtn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 5%;
+          font-size: 20px;
+          transition: 0.15s;
+          cursor: pointer;
+          color: #fff;
+          padding: 2px 6px;
+          border-radius: 2px;
+          border-color: transparent;
+          &:hover {
+            background-color: #d5978e;
+          }
+          @media (max-width: 767px) {
+            right: 2%;
+          }
+        }
+      }
+    }
+
+    .newsModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: $zIndex-1021;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      &.show {
+        display: flex;
+      }
+      .newsModal-cont {
+        padding: 1rem;
+        transition: transform 0.3s ease-out;
+        background-color: #fffcf7;
+        max-width: 90%;
+        .newsModal-header {
+          position: relative;
+          .newsModal-title {
+            text-align: center;
+            padding-right: 2rem;
+            font-size: 1.5rem;
+            @media (max-width: 767px) {
+              text-align: start;
+              font-size: 1.2rem;
+            }
+          }
+
+          .newsModal-closeBtn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            border-color: transparent;
+            background-color: $info;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 2px;
+            &:hover {
+              background-color: #d1aca6;
+            }
+          }
+        }
+        .newsModal-body {
+          margin-top: 1rem;
+          p {
+            font-size: 1.5rem;
+            @media (max-width: 767px) {
+              font-size: 1.2rem;
+            }
+          }
+          .img-couponAlert {
+            width: 100%;
+            height: 300px;
+            background: url('../../assets/coupon-alert.jpg') no-repeat
+              center/cover;
+          }
+        }
+      }
+    }
+  }
+  .navbar {
+    z-index: $zIndex-5;
+    background-color: $backgroundColor;
+    .navbar-collapse {
+      &.show {
+        z-index: $zIndex-4;
+        height: auto;
+        padding: 1rem 0;
+        overflow: visible;
+      }
+      .navbar-nav {
+        flex-direction: row;
+
+        .nav-item {
+          color: rgba(0, 0, 0, 0.55);
+          letter-spacing: 1px;
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+        }
+        @media (max-width: 767px) {
+          display: flex;
+          flex-direction: column;
+          padding-left: 0;
+          margin-bottom: 0;
+          list-style: none;
+          .nav-item {
+            padding-right: 0rem;
+            padding-left: 0rem;
+          }
+        }
+        .nav-link {
+          color: $secondary;
+          &.active {
+            color: $gray-800;
+          }
+        }
+      }
+      @media (max-width: 767px) {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        height: auto;
+        transition: all 0.3s;
+        text-align: center;
+        background: $backgroundColor;
+        z-index: $zIndex-4;
+        padding: 1rem 0;
+      }
+    }
+
+    .nav-icons {
+      &:hover {
+        color: #212529;
+        .badge {
+          background: #212529;
+        }
+      }
+      .bi-bag {
+        font-size: 20px;
+      }
+      .badge {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        background: #e35d6a;
+        transition: all 0.2s;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .navbar-toggler:focus {
+      box-shadow: 0 0 0 0;
+    }
+  }
+  .overlay {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    background: rgba(33, 37, 41, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s linear;
+    &.show {
+      opacity: 1;
+      bottom: 0;
+    }
+  }
+}
