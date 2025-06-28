@@ -70,7 +70,13 @@ export default function Navbar({ cartData }) {
                 <i className="bi bi-bag"></i>
 
                 {totalQty !== 0 && (
-                  <span className="position-absolute badge">{totalQty}</span>
+                  <span
+                    className={`position-absolute badge ${
+                      totalQty ? '' : 'd-none'
+                    }`}
+                  >
+                    {totalQty}
+                  </span>
                 )}
               </NavLink>
             </div>
