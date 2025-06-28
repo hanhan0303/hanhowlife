@@ -54,7 +54,10 @@ export default function FrontLayout() {
                 </a>
               </li>
               <li className="footer-icon fs-7">
-                <a href="#" target="_blank">
+                <a
+                  href="https://github.com/hanhan0303/hanhowlife"
+                  target="_blank"
+                >
                   <i className="bi bi-github"></i>
                 </a>
               </li>
