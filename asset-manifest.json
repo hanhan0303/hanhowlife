@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/hanhowlife/static/css/main.9624076e.css",
-    "main.js": "/hanhowlife/static/js/main.412e7a40.js",
+    "main.css": "/hanhowlife/static/css/main.ce7b463a.css",
+    "main.js": "/hanhowlife/static/js/main.064b7fdb.js",
     "static/js/453.22db2aab.chunk.js": "/hanhowlife/static/js/453.22db2aab.chunk.js",
     "static/media/coupon-alert.jpg": "/hanhowlife/static/media/coupon-alert.423efe5f27b22f808116.jpg",
     "static/media/index-banner.png": "/hanhowlife/static/media/index-banner.66103027eb5ce9b26d3d.png",
@@ -10,6 +10,7 @@
     "static/media/success-banner.png": "/hanhowlife/static/media/success-banner.b58b1ff6e6e0390a0cb9.png",
     "static/media/bootstrap-icons.woff?": "/hanhowlife/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
     "static/media/index-healthy-delicious.jpg": "/hanhowlife/static/media/index-healthy-delicious.ebf03ac2093d9ee66037.jpg",
+    "static/media/admin-bg.png": "/hanhowlife/static/media/admin-bg.cbd8aa4da7b6c9906614.png",
     "static/media/bootstrap-icons.woff2?": "/hanhowlife/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "static/media/crystal-care.jpg": "/hanhowlife/static/media/crystal-care.ab1ae1ef57ee0ce85001.jpg",
     "static/media/crystal.png": "/hanhowlife/static/media/crystal.24753628a83258617fd5.png",
@@ -17,12 +18,12 @@
     "static/media/info-icon.png": "/hanhowlife/static/media/info-icon.812a18cd491f158a3f03.png",
     "static/media/logo.jpg": "/hanhowlife/static/media/logo.aef3b5a4f86eeca7e6d6.jpg",
     "index.html": "/hanhowlife/index.html",
-    "main.9624076e.css.map": "/hanhowlife/static/css/main.9624076e.css.map",
-    "main.412e7a40.js.map": "/hanhowlife/static/js/main.412e7a40.js.map",
+    "main.ce7b463a.css.map": "/hanhowlife/static/css/main.ce7b463a.css.map",
+    "main.064b7fdb.js.map": "/hanhowlife/static/js/main.064b7fdb.js.map",
     "453.22db2aab.chunk.js.map": "/hanhowlife/static/js/453.22db2aab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9624076e.css",
-    "static/js/main.412e7a40.js"
+    "static/css/main.ce7b463a.css",
+    "static/js/main.064b7fdb.js"
   ]
 }
