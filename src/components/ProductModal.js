@@ -192,7 +192,7 @@ export default function ProductModal({
                 <div className="col-sm-8">
                   <div className="form-group mb-2">
                     <label className="w-100" htmlFor="title">
-                      標題
+                      標題<small style={{ color: 'red' }}>*</small>
                       <input
                         type="text"
                         id="title"
@@ -207,7 +207,7 @@ export default function ProductModal({
                   <div className="row">
                     <div className="form-group mb-2 col-md-6">
                       <label className="w-100" htmlFor="category">
-                        分類
+                        分類<small style={{ color: 'red' }}>*</small>
                         <input
                           type="text"
                           id="category"
@@ -221,7 +221,7 @@ export default function ProductModal({
                     </div>
                     <div className="form-group mb-2 col-md-6">
                       <label className="w-100" htmlFor="unit">
-                        單位
+                        單位<small style={{ color: 'red' }}>*</small>
                         <input
                           type="unit"
                           id="unit"

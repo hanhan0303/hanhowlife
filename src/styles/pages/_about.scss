@@ -37,6 +37,11 @@
 .about-cont {
   padding: 0rem 10rem;
   max-width: 1200px;
+  h3 {
+    color: $primary;
+    font-weight: 600;
+    text-shadow: 0 3px 3px rgba(90, 80, 75, 0.2);
+  }
   @media (max-width: 767px) {
     padding: 0 1.5rem;
     max-width: 540px;

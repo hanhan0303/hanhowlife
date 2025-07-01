@@ -24,7 +24,7 @@ export default function ScrollTopButton() {
         display: show ? 'block' : 'none',
       }}
     >
-      <i className="bi bi-caret-up-square-fill"></i>
+      <i className="bi bi-rocket scrollTop-btn"></i>
     </div>
   );
 }

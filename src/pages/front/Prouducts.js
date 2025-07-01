@@ -59,7 +59,7 @@ export default function Products() {
   return (
     <>
       <div className="container px-3 pb-5 min-height">
-        <h1 className="fs-4 text-center py-3">HanHowLife能量商品</h1>
+        <h1 className="fs-4 text-center py-3">HanHowLife 能量商品</h1>
         <ul className="category list-unstyled d-flex justify-content-center mt-4">
           {categories.map((cat) => {
             return (

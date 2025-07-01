@@ -1,0 +1,29 @@
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  .coupon-input {
+    border: 1px solid #adb5bd;
+    color: #676b85;
+    font-weight: 500;
+    padding: 1rem;
+    background: transparent;
+    border-radius: 0;
+    text-align: center;
+    &:hover {
+      color: #414666;
+      border-color: #414666;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .use-coupon {
+    &:hover {
+      color: #676b85;
+      border-color: #adb5bd;
+    }
+  }
+}

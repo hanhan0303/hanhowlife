@@ -10,7 +10,9 @@ $zIndex-1021: 1021;
 /*bootstrap sticky-top zindex 1020*/
 
 $backgroundColor: #fffcf7;
-
+.min-height {
+  min-height: calc(100dvh - 280px);
+}
 .loading {
   position: fixed;
   top: 0;
@@ -45,11 +47,13 @@ $backgroundColor: #fffcf7;
   span {
     color: #ffffff;
   }
-  .dark-text {
-    color: $primary;
-    &:hover {
+  &:hover {
+    .dark-text {
       color: #ffffff;
     }
+  }
+  .dark-text {
+    color: $primary;
   }
 
   .btnText {
@@ -243,7 +247,7 @@ $backgroundColor: #fffcf7;
   right: 5%;
   z-index: $zIndex-4;
   cursor: pointer;
-  .bi-caret-up-square-fill {
+  .scrollTop-btn {
     color: rgba(139, 145, 181, 0.8);
     font-size: 40px;
   }

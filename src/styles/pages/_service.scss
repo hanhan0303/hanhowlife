@@ -41,9 +41,12 @@
     padding: 0 1.5rem;
     max-width: 540px;
   }
-
-  h2 button {
-    color: #414666;
-    font-size: 1.25rem;
+  h2 {
+    button {
+      color: #414666;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-shadow: 0 3px 3px rgba(90, 80, 75, 0.1);
+    }
   }
 }

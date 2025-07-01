@@ -42,6 +42,7 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
       const res = await axios.put(api, { data: { ...tempData } });
       console.log(res);
       handleSuccessMessage(dispatch, res);
+      closeOrderModal();
       setIsLoading(false);
       getOrders();
     } catch (err) {
@@ -99,7 +100,7 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
                 </div>
               </div>
               <div className="mb-3 row">
-                <span className="col-sm-2 col-form-label">外送地址</span>
+                <span className="col-sm-2 col-form-label">訂單地址</span>
                 <div className="col-sm-10">
                   <input
                     type="text"
@@ -148,7 +149,7 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
               )}
 
               <div>
-                <h5 className="mt-4">修改訂單狀態</h5>
+                <h5 className="mt-4">修改付款狀態</h5>
                 <div className="form-check mb-4">
                   <label className="form-check-label" htmlFor="is_paid">
                     <input
@@ -165,7 +166,7 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
                 </div>
                 <div className="mb-4">
                   <span className="col-sm-2 col-form-label d-block">
-                    外送進度
+                    訂單進度
                   </span>
                   <select
                     className="form-select"
@@ -176,7 +177,7 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
                   >
                     <option value={0}>未確認</option>
                     <option value={1}>已確認</option>
-                    <option value={2}>外送中</option>
+                    <option value={2}>出貨中</option>
                     <option value={3}>已送達</option>
                   </select>
                 </div>

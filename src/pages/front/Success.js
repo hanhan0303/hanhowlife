@@ -11,7 +11,7 @@ export default function Success() {
     const res = await axios.get(
       `/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`,
     );
-    console.log('取得訂單', res);
+    console.log('取得訂單成功', res);
     setOrderData(res.data.order);
   };
 
@@ -20,7 +20,7 @@ export default function Success() {
   }, [orderId]);
   return (
     <>
-      <div className="container full-height">
+      <div className="container min-height">
         <div
           style={{
             minHeight: '400px',

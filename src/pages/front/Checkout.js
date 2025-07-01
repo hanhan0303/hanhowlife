@@ -2,9 +2,14 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { Input } from '../../components/FormElements';
+import { useRef, useState } from 'react';
 
 export default function Checkout() {
   const { cartData, getCart } = useOutletContext();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [coupon, setCoupon] = useState('vip888');
+  const [couponResult, setCouponResult] = useState(null);
   const {
     register,
     handleSubmit,
@@ -29,14 +34,37 @@ export default function Checkout() {
       `/v2/api/${process.env.REACT_APP_API_PATH}/order`,
       form,
     );
-    console.log('useForm', res);
+    console.log('訂單送出成功', res);
     getCart();
     navigate(`/success/${res.data.orderId}`);
   };
 
+  const handleCouponSubmit = async () => {
+    const data = {
+      data: {
+        code: coupon,
+      },
+    };
+    setIsLoading(true);
+
+    try {
+      const res = await axios.post(
+        `/v2/api/${process.env.REACT_APP_API_PATH}/coupon`,
+        data,
+      );
+      console.log('已套用優惠卷', res);
+      setCouponResult(res.data);
+    } catch (err) {
+      console.log('套用優惠卷失敗', err); //err.response.data.message
+      setCouponResult(err.response.data);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
-      <div className=" pt-5 pb-7 full-height">
+      <div className=" pt-5 pb-7 min-height">
         <div className="container">
           <div className="row justify-content-center flex-md-row flex-column-reverse">
             <form className="col-md-6" onSubmit={handleSubmit(onSubmit)}>
@@ -146,10 +174,62 @@ export default function Checkout() {
                     </div>
                   );
                 })}
-                <div className="d-flex justify-content-between mt-4">
-                  <p className="mb-0 h4 fw-bold">Total</p>
-                  <p className="mb-0 h4 fw-bold">NT$ {cartData.final_total}</p>
+                <div className="input-group mt-4">
+                  <input
+                    className={`p-2 coupon-input form-control ${
+                      couponResult?.success ? 'use-coupon' : ''
+                    }`}
+                    type="text"
+                    placeholder="輸入優惠碼"
+                    disabled={couponResult?.success}
+                    value={coupon}
+                    onChange={(e) => {
+                      setCoupon(e.target.value);
+                    }}
+                  />
+                  <button
+                    className="product-addBtn btn btn-sm btn-primary px-3"
+                    type="button"
+                    onClick={() => handleCouponSubmit()}
+                    disabled={couponResult?.success}
+                  >
+                    <span className={` ${isLoading ? 'd-none fade' : 'show'}`}>
+                      套用優惠卷
+                    </span>
+                    <div
+                      className={`bounceBall ${
+                        isLoading ? 'show' : 'd-none fade'
+                      }`}
+                    >
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </button>
                 </div>
+
+                <small style={{ color: '#e35d6a' }}>
+                  {couponResult?.message}
+                </small>
+
+                {couponResult?.success ? (
+                  <div className="mt-4 d-flex flex-column align-items-end">
+                    <small className="fs-7 text-muted">
+                      總計金額：NT$ {cartData.final_total}
+                    </small>
+                    <p className="text-primary">
+                      折扣後金額：NT$
+                      <span className="fs-4">
+                        {Math.round(cartData.final_total * 0.8)}
+                      </span>
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-primary mt-4  d-flex justify-content-end align-items-center">
+                    總計金額：NT$
+                    <span className="fs-4">{cartData.final_total}</span>
+                  </p>
+                )}
               </div>
             </div>
           </div>

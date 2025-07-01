@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
   return (
     <>
-      <div className="container-fluid px-0">
+      <div className="container-fluid px-0  min-height">
         <div className="bg-cover index-banner">
           <div className="container d-flex flex-column justify-content-center align-items-center">
             <h1 className="text-center text-white">

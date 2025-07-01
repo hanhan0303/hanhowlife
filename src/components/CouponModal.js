@@ -103,7 +103,7 @@ export default function CouponModal({
             <div className="modal-body">
               <div className="mb-2">
                 <label className="w-100" htmlFor="title">
-                  標題
+                  標題<small style={{ color: 'red' }}>*</small>
                   <input
                     type="text"
                     id="title"

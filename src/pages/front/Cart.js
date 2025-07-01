@@ -51,21 +51,21 @@ export default function Cart() {
         `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
         data,
       );
-      console.log(res);
+      console.log('更新購物車成功', res);
       setLoadingItem(
         loadingItems.filter((loadingObject) => loadingObject !== item.id),
       );
       getCart();
     } catch (err) {
-      console.log(err);
+      console.log('更新購物車失敗', err);
     }
   };
 
   return (
     <>
-      <div className="container">
+      <div className="container min-height">
         <div className="row justify-content-center">
-          <div className="col-md-6 py-5 full-height">
+          <div className="col-md-6 py-5">
             {cartData?.carts?.length === 0 ? (
               <>
                 <div className="alert alert-secondary">還沒有選擇商品喔</div>

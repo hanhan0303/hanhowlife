@@ -19,20 +19,20 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<FrontLayout />}>
-          <Route index element={<Home />}></Route>
-          <Route path="about" element={<About />}></Route>
-          <Route path="service" element={<Service />}></Route>
-          <Route path="products" element={<Products />}></Route>
-          <Route path="product/:id" element={<ProductDetail />}></Route>
-          <Route path="cart" element={<Cart />}></Route>
-          <Route path="checkout" element={<Checkout />}></Route>
-          <Route path="success/:orderId" element={<Success />}></Route>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="service" element={<Service />} />
+          <Route path="products" element={<Products />} />
+          <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="success/:orderId" element={<Success />} />
         </Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
-          <Route path="products" element={<AdminProducts />}></Route>
-          <Route path="coupons" element={<AdminCoupons />}></Route>
-          <Route path="orders" element={<AdminOrders />}></Route>
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="coupons" element={<AdminCoupons />} />
+          <Route path="orders" element={<AdminOrders />} />
         </Route>
       </Routes>
     </div>

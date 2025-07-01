@@ -16,16 +16,31 @@
     }
   }
 }
-.intro-section-img {
-  max-height: 350px;
-  max-width: 100%;
+.intro-section {
+  h2 {
+    color: $primary;
+    font-weight: 700;
+    text-shadow: 0 3px 3px rgba(90, 80, 75, 0.2);
+  }
+  h4 {
+    font-weight: 700;
+  }
+  .intro-section-img {
+    max-height: 350px;
+    max-width: 100%;
+  }
 }
+
 .cookie-icon {
   width: 22px;
 }
 
 .hot-section {
   background-color: #fff5e4;
+  h2 {
+    font-weight: 700;
+    text-shadow: 0 3px 3px rgba(90, 80, 75, 0.2);
+  }
 }
 .info-block {
   max-width: 1200px;

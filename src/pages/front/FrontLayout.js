@@ -16,10 +16,10 @@ export default function FrontLayout() {
       const res = await axios.get(
         `/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
       );
-      console.log('cart data', res);
+      console.log('取得購物車成功', res);
       setCartData(res.data.data);
     } catch (err) {
-      console.log('cart err', err);
+      console.log('取得購物車', err);
     }
   };
 
