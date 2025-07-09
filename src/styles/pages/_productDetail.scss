@@ -46,10 +46,10 @@
     }
     .photo-sm {
       height: calc(10vw - 0.66667em);
-      min-height: 113.33333px;
-      max-height: 83.33333px;
+      min-height: 113px;
+      max-height: 83px;
       @media (max-width: 767px) {
-        height: calc(33.33333vw - 0.66667em);
+        height: calc(33vw - 0.6em);
       }
       & + .photo-sm {
         padding-left: 1em;

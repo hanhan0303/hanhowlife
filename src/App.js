@@ -13,6 +13,7 @@ import Checkout from './pages/front/Checkout';
 import Success from './pages/front/Success';
 import About from './pages/front/About';
 import Service from './pages/front/Service';
+import CheckOrder from './pages/front/CheckOrder';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="product/:id" element={<ProductDetail />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="checkout" element={<Checkout />} />
+          <Route path="checkorder" element={<CheckOrder />} />
+          <Route path="checkout/:orderId" element={<Checkout />} />
           <Route path="success/:orderId" element={<Success />} />
         </Route>
         <Route path="/login" element={<Login />} />

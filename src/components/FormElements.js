@@ -42,13 +42,14 @@ export const Input = ({
   return (
     <>
       <label htmlFor={id} className="form-label">
+        <span className="text-danger">* </span>
         {labelText}
       </label>
       <input
         id={id}
         type={type}
         placeholder={placeholder}
-        className={`form-control ${errors[id] && 'is-invalid'}`}
+        className={`form-control rounded-0 ${errors[id] && 'is-invalid'}`}
         {...register(id, rules)}
       />
       {errors[id] && (
@@ -83,6 +84,23 @@ export const Select = ({
       {errors[id] && (
         <div className="invalid-feedback">{errors[id]?.message}</div>
       )}
+    </>
+  );
+};
+
+export const Textarea = ({ id, labelText, register }) => {
+  return (
+    <>
+      <label htmlFor={id} className="form-label">
+        {labelText}
+      </label>
+      <textarea
+        name={id}
+        id={id}
+        className="form-control rounded-0"
+        rows="3"
+        {...register(id)}
+      ></textarea>
     </>
   );
 };

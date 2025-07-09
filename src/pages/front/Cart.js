@@ -159,7 +159,7 @@ export default function Cart() {
                   <p className="mb-0 h4 fw-bold">NT${cartData.final_total}</p>
                 </div>
                 <Link
-                  to="/checkout"
+                  to="/checkorder"
                   className="btn btn-dark w-100 mt-4 rounded-0 py-3"
                 >
                   訂單結帳

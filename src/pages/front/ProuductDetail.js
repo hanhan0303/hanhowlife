@@ -4,6 +4,8 @@ import { Link, useOutletContext, useParams } from 'react-router-dom';
 import InfoIcon from '../../assets/info-icon.png';
 import SwiperPerView from '../../components/SwiperPerView';
 import BgNotice from '../../assets/crystal-care.jpg';
+import Loading from 'react-loading';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 export default function ProductDetail() {
   const [product, setProduct] = useState(null);
@@ -52,7 +54,12 @@ export default function ProductDetail() {
     getProduct(id);
   }, [id]);
 
-  if (!product) return <div>Loading...</div>;
+  if (!product)
+    return (
+      <div className="min-height">
+        <LoadingAnimation />
+      </div>
+    );
 
   return (
     <>
