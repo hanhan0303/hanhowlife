@@ -1,29 +1,25 @@
 {
   "files": {
-    "main.css": "/hanhowlife/static/css/main.fa88f00f.css",
-    "main.js": "/hanhowlife/static/js/main.fb3924c6.js",
+    "main.css": "/hanhowlife/static/css/main.45186c33.css",
+    "main.js": "/hanhowlife/static/js/main.34334e0f.js",
     "static/js/453.22db2aab.chunk.js": "/hanhowlife/static/js/453.22db2aab.chunk.js",
-    "static/media/coupon-alert.jpg": "/hanhowlife/static/media/coupon-alert.423efe5f27b22f808116.jpg",
-    "static/media/index-banner.png": "/hanhowlife/static/media/index-banner.66103027eb5ce9b26d3d.png",
-    "static/media/index-natural-ingredients.jpg": "/hanhowlife/static/media/index-natural-ingredients.9958ffc509be65c294d0.jpg",
-    "static/media/page-banner.png": "/hanhowlife/static/media/page-banner.1991ab29b4f425a3d61d.png",
-    "static/media/success-banner.png": "/hanhowlife/static/media/success-banner.b58b1ff6e6e0390a0cb9.png",
+    "static/media/coupon-alert.jpg": "/hanhowlife/static/media/coupon-alert.918aa751bfd14d7a6ce5.jpg",
+    "static/media/index-natural-ingredients.jpg": "/hanhowlife/static/media/index-natural-ingredients.0f52bae22ae84572f3ec.jpg",
+    "static/media/index-banner.png": "/hanhowlife/static/media/index-banner.424755328a6d047f75b4.png",
     "static/media/bootstrap-icons.woff?": "/hanhowlife/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
-    "static/media/index-healthy-delicious.jpg": "/hanhowlife/static/media/index-healthy-delicious.ebf03ac2093d9ee66037.jpg",
-    "static/media/admin-bg.png": "/hanhowlife/static/media/admin-bg.cbd8aa4da7b6c9906614.png",
     "static/media/bootstrap-icons.woff2?": "/hanhowlife/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
-    "static/media/crystal-care.jpg": "/hanhowlife/static/media/crystal-care.ab1ae1ef57ee0ce85001.jpg",
-    "static/media/crystal.png": "/hanhowlife/static/media/crystal.24753628a83258617fd5.png",
-    "static/media/star.png": "/hanhowlife/static/media/star.671abf90928e75853657.png",
-    "static/media/info-icon.png": "/hanhowlife/static/media/info-icon.812a18cd491f158a3f03.png",
-    "static/media/logo.jpg": "/hanhowlife/static/media/logo.aef3b5a4f86eeca7e6d6.jpg",
+    "static/media/page-banner.png": "/hanhowlife/static/media/page-banner.bed965626946e5c02cbd.png",
+    "static/media/crystal-care.jpg": "/hanhowlife/static/media/crystal-care.6a6c7474f121ab274e36.jpg",
+    "static/media/index-healthy-delicious.jpg": "/hanhowlife/static/media/index-healthy-delicious.bc06a873819c799300be.jpg",
+    "static/media/success-banner.png": "/hanhowlife/static/media/success-banner.c38b32c08e9bca2df020.png",
+    "static/media/admin-bg.png": "/hanhowlife/static/media/admin-bg.44d0b0ef3e68997c7aaa.png",
     "index.html": "/hanhowlife/index.html",
-    "main.fa88f00f.css.map": "/hanhowlife/static/css/main.fa88f00f.css.map",
-    "main.fb3924c6.js.map": "/hanhowlife/static/js/main.fb3924c6.js.map",
+    "main.45186c33.css.map": "/hanhowlife/static/css/main.45186c33.css.map",
+    "main.34334e0f.js.map": "/hanhowlife/static/js/main.34334e0f.js.map",
     "453.22db2aab.chunk.js.map": "/hanhowlife/static/js/453.22db2aab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fa88f00f.css",
-    "static/js/main.fb3924c6.js"
+    "static/css/main.45186c33.css",
+    "static/js/main.34334e0f.js"
   ]
 }
