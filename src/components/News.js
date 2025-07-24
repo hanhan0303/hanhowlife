@@ -2,6 +2,8 @@ import { useState } from 'react';
 export default function News() {
   const [newsModalShow, setNewsModalShow] = useState(false);
   const [newsHide, setNewsHide] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const couponCode = 'vip888';
 
   const closeNews = () => {
     setNewsHide(true);
@@ -10,6 +12,7 @@ export default function News() {
   const closeNewsModal = () => {
     setNewsModalShow(false);
   };
+
   const showNewsModal = () => {
     if (newsModalShow) {
       setNewsModalShow(false);
@@ -17,6 +20,20 @@ export default function News() {
     }
     setNewsModalShow(true);
   };
+
+  // 複製優惠碼功能
+  const handleCopyCode = () => {
+    navigator.clipboard
+      .writeText(couponCode)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch((err) => {
+        console.error('複製失敗：', err);
+      });
+  };
+
   return (
     <>
       <div className={`coupon-news ${newsHide ? 'd-none' : ''}`}>
@@ -62,9 +79,29 @@ export default function News() {
                 <button
                   type="button"
                   className="btn btn-info py-2 px-5 text-white"
+                  onClick={handleCopyCode}
                 >
                   複製優惠碼
                 </button>
+                {copied && (
+                  <div
+                    style={{
+                      position: 'fixed',
+                      top: '20px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      backgroundColor: '#000',
+                      color: '#fff',
+                      padding: '10px 20px',
+                      borderRadius: '999px',
+                      fontSize: '14px',
+                      zIndex: 9999,
+                      opacity: 0.9,
+                    }}
+                  >
+                    🎉 優惠碼已複製！
+                  </div>
+                )}
               </div>
             </div>
           </div>

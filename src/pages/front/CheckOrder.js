@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { Input, Textarea } from '../../components/FormElements';
 import { useState } from 'react';
+import { checkCoupon, submitOrder } from '../../apis';
 
 export default function CheckOrder() {
   const { cartData, getCart } = useOutletContext();
@@ -19,44 +19,22 @@ export default function CheckOrder() {
 
   const onSubmit = async (data) => {
     const { name, email, tel, address, message } = data;
-    const form = {
-      data: {
-        user: {
-          name,
-          email,
-          tel,
-          address,
-        },
-        message: message.trim(),
-      },
-    };
 
-    const res = await axios.post(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/order`,
-      form,
-    );
+    const res = await submitOrder(name, email, tel, address, message);
     console.log('訂單送出成功', res);
     getCart();
     navigate(`/checkout/${res.data.orderId}`);
   };
 
   const handleCouponSubmit = async () => {
-    const data = {
-      data: {
-        code: coupon,
-      },
-    };
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/coupon`,
-        data,
-      );
+      const res = await checkCoupon(coupon);
       console.log('已套用優惠卷', res);
       setCouponResult(res.data);
     } catch (err) {
-      console.log('套用優惠卷失敗', err);
+      console.error('套用優惠卷失敗', err);
       setCouponResult(err.response.data);
     } finally {
       setIsLoading(false);

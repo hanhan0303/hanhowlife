@@ -1,13 +1,11 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { checkAdmin, loginAdmin } from '../apis';
+import { LOCALSTORAGE_KEY } from '../constants';
 
 export default function Login() {
-  const token = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('emmaToken='))
-    ?.split('=')[1];
-
+  const [isLoading, setIsLoading] = useState(false);
+  const token = localStorage.getItem(LOCALSTORAGE_KEY);
   const navigate = useNavigate();
   const [data, setData] = useState({
     username: 'tenderiloveu@gmail.com',
@@ -25,16 +23,14 @@ export default function Login() {
   };
 
   const submit = async (e) => {
+    setIsLoading(true);
     try {
       // 驗證登入，登入取得 token
-      const res = await axios.post('/v2/admin/signin', data);
+      const res = await loginAdmin(data);
       const { token, expired } = res.data;
 
-      //用cookie存token
-      document.cookie = `emmaToken=${token}; expires=${new Date(expired)}`;
-
-      // 設定 token 到 axios 全域 headers
-      axios.defaults.headers.common['Authorization'] = token;
+      //用localstorage存token
+      localStorage.setItem(LOCALSTORAGE_KEY, token);
 
       if (res.data.success) {
         navigate('/admin/products');
@@ -42,6 +38,8 @@ export default function Login() {
     } catch (err) {
       console.error('登入失敗');
       setLoginState(err.response.data);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,14 +47,11 @@ export default function Login() {
     if (token) {
       (async () => {
         try {
-          // 設定 token 到 axios 全域 headers
-          axios.defaults.headers.common['Authorization'] = token;
-          await axios.post('/v2/api/user/check');
+          await checkAdmin();
           navigate('/admin/products');
         } catch (err) {
           if (!err.response.data.success) {
-            axios.defaults.headers.common['Authorization'] = '';
-            document.cookie = 'emmaToken=;';
+            localStorage.removeItem(LOCALSTORAGE_KEY);
           }
         }
       })();
@@ -108,11 +103,12 @@ export default function Login() {
               </div>
               <div className="mb-2">
                 <button
+                  disabled={isLoading}
                   type="button"
                   className="btn btn-primary mt-2"
                   onClick={submit}
                 >
-                  登入
+                  {isLoading ? 'Loading...' : '登入'}
                 </button>
               </div>
               <div className="mb-2">

@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import {
   MessageContext,
   handleSuccessMessage,
   handleErrorMessage,
 } from '../store/messageStore';
+import { addAdminProduct, updateAdminProduct, uploadImage } from '../apis';
 
 export default function ProductModal({
   closeProductModal,
@@ -24,7 +24,9 @@ export default function ProductModal({
     imageUrl: '',
   });
 
-  const [message, dispatch] = useContext(MessageContext);
+  const [, dispatch] = useContext(MessageContext);
+  const [uploadImageLoading, setUploadImageLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -93,22 +95,24 @@ export default function ProductModal({
   }, [type, tempProduct]);
 
   const submit = async () => {
-    ///PUT > v2/api/{api_path}/admin/product/{id}
-    let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`;
-    let method = 'post';
-    if (type === 'edit') {
-      api = `v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${tempProduct.id}`;
-      method = 'put';
-    }
+    setIsLoading(true);
     try {
-      const res = await axios[method](api, { data: toAPI(tempData) });
-      console.log(res);
-      handleSuccessMessage(dispatch, res);
+      if (type === 'edit') {
+        const res = await updateAdminProduct(tempProduct.id, toAPI(tempData));
+        console.log('資料更新成功', res);
+        handleSuccessMessage(dispatch, res);
+      } else {
+        const res = await addAdminProduct(toAPI(tempData));
+        console.log('資料新增成功', res);
+        handleSuccessMessage(dispatch, res);
+      }
       closeProductModal();
       getProducts();
     } catch (err) {
       console.log(err.response.data.message);
       handleErrorMessage(dispatch, err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -121,13 +125,14 @@ export default function ProductModal({
     formData.append('file-to-upload', file);
 
     try {
-      const res = await axios.post(
-        `v2/api/${process.env.REACT_APP_API_PATH}/admin/upload`,
-        formData,
-      );
+      setUploadImageLoading(true);
+      const res = await uploadImage(formData);
       setTempData({ ...tempData, imageUrl: res.data.imageUrl });
+      console.log('上傳圖片成功', res);
     } catch (err) {
-      console.log(err);
+      console.error('上傳圖片失敗', err);
+    } finally {
+      setUploadImageLoading(false);
     }
   };
 
@@ -163,10 +168,13 @@ export default function ProductModal({
                         type="text"
                         name="imageUrl"
                         id="image"
-                        placeholder="請輸入圖片連結"
+                        placeholder={
+                          uploadImageLoading ? 'loading...' : '請輸入圖片連結'
+                        }
                         className="form-control"
                         onChange={handleChange}
                         value={tempData.imageUrl}
+                        disabled={uploadImageLoading}
                       />
                     </label>
                   </div>
@@ -327,8 +335,9 @@ export default function ProductModal({
                 type="button"
                 className="btn btn-primary"
                 onClick={submit}
+                disabled={isLoading}
               >
-                儲存
+                {isLoading ? 'loading...' : '儲存'}
               </button>
             </div>
           </div>

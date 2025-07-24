@@ -25,7 +25,7 @@ export default function Navbar({ cartData }) {
   return (
     <>
       <header className="sticky-top container-fluid header-navbar px-0">
-        {/* <News /> */}
+        <News />
         <nav className="navbar px-0 navbar-expand-md navbar-light">
           <div className="container py-2 px-3 text-secondary d-flex justify-content-end">
             <NavLink to="/" className="navbar-brand me-auto">

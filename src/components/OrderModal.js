@@ -1,14 +1,13 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import {
   MessageContext,
   handleSuccessMessage,
   handleErrorMessage,
 } from '../store/messageStore';
+import { updateOrder } from '../apis';
 
 export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
   const [isLoading, setIsLoading] = useState(false);
-
   const [tempData, setTempData] = useState({
     is_paid: '',
     status: 0,
@@ -38,17 +37,16 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
   const submit = async () => {
     setIsLoading(true);
     try {
-      let api = `v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${tempOrder.id}`;
-      const res = await axios.put(api, { data: { ...tempData } });
+      const res = await updateOrder(tempOrder.id, tempData);
       console.log(res);
       handleSuccessMessage(dispatch, res);
       closeOrderModal();
-      setIsLoading(false);
       getOrders();
     } catch (err) {
       console.log(err.response.data.message);
-      setIsLoading(false);
       handleErrorMessage(dispatch, err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -159,7 +157,6 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
                       id="is_paid"
                       checked={!!tempData.is_paid}
                       onChange={handleChange}
-                      disabled={isLoading}
                     />
                     付款狀態 ({tempData.is_paid ? '已付款' : '未付款'})
                   </label>
@@ -173,7 +170,6 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
                     name="status"
                     value={tempData.status}
                     onChange={handleChange}
-                    disabled={isLoading}
                   >
                     <option value={0}>未確認</option>
                     <option value={1}>已確認</option>
@@ -195,8 +191,9 @@ export default function OrderModal({ closeOrderModal, getOrders, tempOrder }) {
                 type="button"
                 className="btn btn-primary"
                 onClick={submit}
+                disabled={isLoading}
               >
-                儲存
+                {isLoading ? 'loading...' : '儲存'}
               </button>
             </div>
           </div>

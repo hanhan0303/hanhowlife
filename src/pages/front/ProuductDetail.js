@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { Link, useOutletContext, useParams } from 'react-router-dom';
 import InfoIcon from '../../assets/info-icon.png';
 import SwiperPerView from '../../components/SwiperPerView';
 import BgNotice from '../../assets/crystal-care.jpg';
-import Loading from 'react-loading';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { addCartItem, fetchProduct } from '../../apis';
 
 export default function ProductDetail() {
   const [product, setProduct] = useState(null);
@@ -20,35 +19,29 @@ export default function ProductDetail() {
   };
 
   const getProduct = async (id) => {
-    const res = await axios.get(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/product/${id}`,
-    );
-    setProduct(res.data.product);
+    try {
+      const res = await fetchProduct(id);
+      setProduct(res.data.product);
+      console.log('用ID取得產品資料成功', res);
+    } catch (err) {
+      console.error('用ID取得產品資料失敗', err);
+    }
   };
   const addToCart = async () => {
     const cartQuantity = Number(inputRef.current.value);
 
-    const data = {
-      data: {
-        product_id: product.id,
-        qty: cartQuantity,
-      },
-    };
     setIsLoading(true);
     try {
-      const res = await axios.post(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
-        data,
-      );
+      const res = await addCartItem(product.id, cartQuantity);
       console.log('加入購物車成功', res);
       getCart();
       setIsLoading(false);
     } catch (err) {
-      console.log('加入購物車失敗', err);
+      console.error('加入購物車失敗', err);
       setIsLoading(false);
     }
   };
-
+  console.log('data.product', product);
   useEffect(() => {
     window.scrollTo(0, 0);
     getProduct(id);
@@ -71,26 +64,27 @@ export default function ProductDetail() {
               <span
                 className="photo-img"
                 style={{
-                  backgroundImage: `url(${product.imagesUrl[mainIndex]})`,
+                  backgroundImage: `url(${product?.imageUrl})`,
                 }}
               />
             </div>
-            {product.imagesUrl.slice(0, 3).map((url, index) => (
-              <div
-                className={`photo-sm col-4 ${
-                  mainIndex === index ? 'active' : ''
-                }`}
-                key={index}
-                onMouseEnter={() => handleMouseEnter(index)}
-              >
-                <span
-                  className="photo-img"
-                  style={{
-                    backgroundImage: `url(${url})`,
-                  }}
-                ></span>
-              </div>
-            ))}
+            {Array.isArray(product?.imagesUrl) &&
+              product.imagesUrl.slice(0, 3).map((url, index) => (
+                <div
+                  className={`photo-sm col-4 ${
+                    mainIndex === index ? 'active' : ''
+                  }`}
+                  key={index}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                >
+                  <span
+                    className="photo-img"
+                    style={{
+                      backgroundImage: `url(${url})`,
+                    }}
+                  ></span>
+                </div>
+              ))}
           </div>
           <div className="product-content col-md-6 text-center text-md-start">
             <div className="path d-block mb-4 fs-7">

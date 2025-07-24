@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 import successBanner from '../../assets/success-banner.png';
+import { fetchOrder } from '../../apis';
 
 export default function Success() {
   const { orderId } = useParams();
   const [orderData, setOrderData] = useState({});
 
   const getOrder = async (orderId) => {
-    const res = await axios.get(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`,
-    );
+    const res = await fetchOrder(orderId);
     console.log('取得訂單成功', res);
     setOrderData(res.data.order);
   };

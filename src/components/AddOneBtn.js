@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { addCartItem, updateCartAPI } from '../apis';
 
 export default function AddOneBtn({ btnClass, item }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,20 +12,15 @@ export default function AddOneBtn({ btnClass, item }) {
     const existingItem = cartData.carts.find(
       (cart) => cart.product_id === item?.id,
     );
-    const apiPath = `/v2/api/${process.env.REACT_APP_API_PATH}/cart${
-      existingItem ? `/${existingItem.id}` : ''
-    }`;
-    const method = existingItem ? axios.put : axios.post;
+    const productId = item.id;
     const qty = existingItem ? existingItem.qty + 1 : 1;
 
     try {
-      await method(apiPath, {
-        data: {
-          product_id: item.id,
-          qty,
-        },
-      });
-
+      if (existingItem) {
+        await updateCartAPI(existingItem.id, productId, qty);
+      } else {
+        await addCartItem(productId, qty);
+      }
       console.log(existingItem ? '已更新商品數量+1' : '已加入新商品');
       getCart();
     } catch (err) {

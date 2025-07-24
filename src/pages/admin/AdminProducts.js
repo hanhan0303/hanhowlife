@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { Modal } from 'bootstrap';
 import ProductModal from '../../components/ProductModal';
 import DeleteModal from '../../components/DeleteModal';
@@ -9,12 +8,15 @@ import {
   handleSuccessMessage,
   MessageContext,
 } from '../../store/messageStore';
+import { deleteAdminProduct, fetchAdminProducts } from '../../apis';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [pagination, setPagination] = useState({});
   const [type, setType] = useState('create');
   const [tempProduct, setTempProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [, dispatch] = useContext(MessageContext);
   const productModalRef = useRef(null);
   const deleteModalRef = useRef(null);
@@ -57,17 +59,17 @@ export default function AdminProducts() {
   };
 
   const getProducts = async (page = 1) => {
+    setIsLoading(true);
     try {
-      //分頁API  ?page=2
-      //領取產品列表
-      const productRes = await axios.get(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/admin/products?page=${page}`,
-      );
+      const productRes = await fetchAdminProducts(page);
       const productList = productRes.data.products.map(toFormData);
       setProducts(productList);
       setPagination(productRes.data.pagination);
+      console.log('抓產品資料成功', productRes);
     } catch (err) {
       console.error('抓產品資料失敗', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,9 +91,7 @@ export default function AdminProducts() {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await axios.delete(
-        `v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${id}`,
-      );
+      const res = await deleteAdminProduct(id);
       if (res.data.success) {
         handleSuccessMessage(dispatch, res);
         getProducts();
@@ -146,38 +146,48 @@ export default function AdminProducts() {
                 <th scope="col">編輯</th>
               </tr>
             </thead>
-            <tbody>
-              {products.map((product) => {
-                return (
-                  <tr key={product.id}>
-                    <td>{product.category}</td>
-                    <td>{product.title}</td>
-                    <td>{product.price}</td>
-                    <td>{product.isEnabled ? '啟用' : '未啟用'}</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={() => {
-                          openProductModal('edit', product);
-                        }}
-                      >
-                        編輯
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-outline-danger btn-sm ms-md-2 mt-1"
-                        onClick={() => {
-                          openDeleteModal(product);
-                        }}
-                      >
-                        刪除
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+            {isLoading ? (
+              <tbody>
+                <tr>
+                  <td colspan="5">
+                    <LoadingAnimation />
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
+              <tbody>
+                {products.map((product) => {
+                  return (
+                    <tr key={product.id}>
+                      <td>{product.category}</td>
+                      <td>{product.title}</td>
+                      <td>{product.price}</td>
+                      <td>{product.isEnabled ? '啟用' : '未啟用'}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          onClick={() => {
+                            openProductModal('edit', product);
+                          }}
+                        >
+                          編輯
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger btn-sm ms-md-2 mt-1"
+                          onClick={() => {
+                            openDeleteModal(product);
+                          }}
+                        >
+                          刪除
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
           </table>
         </div>
 

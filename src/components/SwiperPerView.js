@@ -6,21 +6,16 @@ import { Autoplay } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 import AddOneBtn from './AddOneBtn';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import {fetchProducts} from "../apis";
 
 export default function SwiperPerView({ spaceBetween, category }) {
   const [products, setProducts] = useState([]);
-  const [loop, setLoop] = useState(false);
 
   const getProducts = async () => {
-    const res = await axios.get(
-      `/v2/api/${
-        process.env.REACT_APP_API_PATH
-      }/products/?category=${category.trim()}`,
-    );
+    const res = await fetchProducts(category)
     setProducts(res.data.products);
-    setLoop(true);
   };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -33,7 +28,7 @@ export default function SwiperPerView({ spaceBetween, category }) {
           delay: 3000,
           pauseOnMouseEnter: true,
         }}
-        loop={loop}
+        loop={!!products.length}
         modules={[Autoplay]}
         className="productsSwiper"
         breakpoints={{

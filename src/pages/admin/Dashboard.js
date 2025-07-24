@@ -1,6 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Message from '../../components/Message';
 import {
   initState,
@@ -8,20 +7,29 @@ import {
   messageReducer,
 } from '../../store/messageStore';
 import ScrollTopButton from '../../components/ScrollTopButton';
+import { checkAdmin, logoutAdmin } from '../../apis';
+import { LOCALSTORAGE_KEY } from '../../constants';
 
 export default function Dashboard() {
+  const [isLoading, setIsLoading] = useState(false);
   const reducer = useReducer(messageReducer, initState);
   const navigate = useNavigate();
 
-  // 每次初始化就從cookie取出token，這樣已經登入過一次就不必再次登入
-  const token = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('emmaToken='))
-    ?.split('=')[1];
+  // 每次初始化就從localStorage取出token，這樣已經登入過一次就不必再次登入
+  const token = localStorage.getItem(LOCALSTORAGE_KEY);
 
-  const logout = () => {
-    document.cookie = 'emmaToken=;';
-    navigate('/login');
+  const logout = async () => {
+    setIsLoading(true);
+    try {
+      const res = await logoutAdmin();
+      console.log('登出成功', res);
+      localStorage.removeItem(LOCALSTORAGE_KEY);
+      navigate('/login');
+    } catch (err) {
+      console.error('登出失敗');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const goToFront = () => {
@@ -35,14 +43,10 @@ export default function Dashboard() {
 
     (async () => {
       try {
-        // 設定 token 到 axios 全域 headers
-        axios.defaults.headers.common['Authorization'] = token;
-
-        await axios.post('/v2/api/user/check');
+        await checkAdmin();
       } catch (err) {
         if (!err.response.data.success) {
-          axios.defaults.headers.common['Authorization'] = '';
-          document.cookie = 'emmaToken=;';
+          localStorage.removeItem(LOCALSTORAGE_KEY);
           navigate('/login');
         }
       }
@@ -60,8 +64,9 @@ export default function Dashboard() {
               type="button"
               className="btn btn-sm btn-light me-2"
               onClick={logout}
+              disabled={isLoading}
             >
-              登出
+              {isLoading ? 'Loading...' : '登出'}
             </button>
 
             <button

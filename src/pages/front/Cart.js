@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
+import { deleteCartAll, deleteCartItem, updateCartAPI } from '../../apis';
 
 export default function Cart() {
   const { cartData, getCart } = useOutletContext();
@@ -11,13 +11,11 @@ export default function Cart() {
   const removeCartItem = async (id) => {
     setRemovingItemId(id);
     try {
-      const res = await axios.delete(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,
-      );
-      console.log('移除購物車', res);
+      const res = await deleteCartItem(id);
+      console.log('刪除購物車品項成功', res);
       getCart();
     } catch (err) {
-      console.log('移除購物車失敗', err);
+      console.error('刪除購物車品項失敗', err);
     } finally {
       setRemovingItemId(null);
     }
@@ -26,13 +24,11 @@ export default function Cart() {
   const removeAllItem = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.delete(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/carts`,
-      );
+      const res = await deleteCartAll();
       console.log('移除購物車所有商品', res);
       getCart();
     } catch (err) {
-      console.log('移除購物車所有商品失敗', err);
+      console.error('移除購物車所有商品失敗', err);
     } finally {
       setIsLoading(false);
     }
@@ -47,17 +43,14 @@ export default function Cart() {
     };
     setLoadingItem([...loadingItems, item.id]);
     try {
-      const res = await axios.put(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
-        data,
-      );
+      const res = await updateCartAPI(item.id, item.product_id, quantity);
       console.log('更新購物車成功', res);
       setLoadingItem(
         loadingItems.filter((loadingObject) => loadingObject !== item.id),
       );
       getCart();
     } catch (err) {
-      console.log('更新購物車失敗', err);
+      console.error('更新購物車失敗', err);
     }
   };
 
@@ -96,6 +89,7 @@ export default function Cart() {
                           className="object-cover"
                           style={{
                             width: '120px',
+                            height: '120px',
                           }}
                         />
                       </Link>

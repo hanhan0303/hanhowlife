@@ -1,61 +1,62 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination';
 import FadeInBox from '../../components/FadeInBox';
 import AddOneBtn from '../../components/AddOneBtn';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { fetchAllProducts, fetchProducts } from '../../apis';
+import { ALL_CATEGORY } from '../../constants';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState('全部');
-  const [categories, setCategories] = useState(['全部']);
+  const [currentCategory, setCurrentCategory] = useState(ALL_CATEGORY);
+  const [categories, setCategories] = useState([ALL_CATEGORY]);
   const [pagination, setPagination] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/products/all?page=1`,
-      );
+      const res = await fetchAllProducts();
       const productList = res.data.products;
       const rawCategories = productList
         .map((item) => item.category?.trim())
         .filter((cat) => cat);
 
-      setCategories(['全部', ...Array.from(new Set(rawCategories))]);
+      setCategories([ALL_CATEGORY, ...Array.from(new Set(rawCategories))]);
     } catch (err) {
-      console.log('分類取得失敗', err);
+      console.error('分類取得失敗', err);
     }
-  };
+  }, []);
 
-  const getProducts = async (currentPage = 1) => {
-    setIsLoading(true);
-    try {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      const categoryQuery =
-        currentCategory === '全部' ? `` : `&category=${currentCategory}`;
+  const getProducts = useCallback(
+    async (currentPage = 1) => {
+      setIsLoading(true);
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      const res = await axios.get(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${currentPage}${categoryQuery}`,
-      );
+        const res = await fetchProducts(
+          currentCategory === ALL_CATEGORY ? null : currentCategory,
+          currentPage,
+        );
 
-      setProducts(res.data.products);
-      setPagination(res.data.pagination);
-    } catch (err) {
-      console.log('取得產品失敗', err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        setProducts(res.data.products);
+        setPagination(res.data.pagination);
+      } catch (err) {
+        console.error('取得產品失敗', err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [currentCategory],
+  );
 
   useEffect(() => {
     // 僅初始化分類時跑一次
-    if (currentCategory === '全部') {
+    if (currentCategory === ALL_CATEGORY) {
       fetchCategories();
     }
     getProducts(1);
-  }, [currentCategory]);
+  }, [currentCategory, fetchCategories, getProducts]);
 
   const handleCategoryChange = (category) => {
     setCurrentCategory(category);

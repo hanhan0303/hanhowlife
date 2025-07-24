@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { Modal } from 'bootstrap';
 import OrderModal from '../../components/OrderModal';
 import DeleteModal from '../../components/DeleteModal';
@@ -9,11 +8,14 @@ import {
   handleSuccessMessage,
   MessageContext,
 } from '../../store/messageStore';
+import { deleteAdminOrder, fetchAdminOrders } from '../../apis';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [pagination, setPagination] = useState({});
   const [tempOrder, setTempOrder] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [, dispatch] = useContext(MessageContext);
 
   const orderModalRef = useRef(null);
@@ -30,16 +32,17 @@ export default function AdminOrders() {
   }, []);
 
   const getOrders = async (page = 1) => {
+    setIsLoading(true);
     try {
-      const res = await axios.get(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/admin/orders?page=${page}`,
-      );
+      const res = await fetchAdminOrders(page);
       const orderList = res.data.orders;
-      console.log('訂單', orderList);
+      console.log('抓訂單資料成功', orderList);
       setOrders(orderList);
       setPagination(res.data.pagination);
     } catch (err) {
       console.error('抓訂單資料失敗', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,9 +64,7 @@ export default function AdminOrders() {
   };
   const deleteOrder = async (id) => {
     try {
-      const res = await axios.delete(
-        `v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${id}`,
-      );
+      const res = await deleteAdminOrder(id);
       if (res.data.success) {
         handleSuccessMessage(dispatch, res);
         getOrders();
@@ -105,54 +106,64 @@ export default function AdminOrders() {
                 <th scope="col">編輯</th>
               </tr>
             </thead>
-            <tbody>
-              {orders.map((order) => {
-                return (
-                  <tr key={order.id}>
-                    <td>{order.id}</td>
-                    <td>
-                      {order.user?.name}
-                      {order.user?.email}
-                    </td>
-                    <td>${order.total}</td>
-                    <td>
-                      {order.is_paid ? (
-                        <span className="text-success fw-bold">付款完成</span>
-                      ) : (
-                        '未付款'
-                      )}
-                    </td>
-                    <td>
-                      {order.paid_date
-                        ? new Date(order.paid_date * 1000).toLocaleString()
-                        : '未付款'}
-                    </td>
-                    <td>{order.message}</td>
+            {isLoading ? (
+              <tbody>
+                <tr>
+                  <td colspan="7">
+                    <LoadingAnimation />
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
+              <tbody>
+                {orders.map((order) => {
+                  return (
+                    <tr key={order.id}>
+                      <td>{order.id}</td>
+                      <td>
+                        {order.user?.name}
+                        {order.user?.email}
+                      </td>
+                      <td>${order.total}</td>
+                      <td>
+                        {order.is_paid ? (
+                          <span className="text-success fw-bold">付款完成</span>
+                        ) : (
+                          '未付款'
+                        )}
+                      </td>
+                      <td>
+                        {order.paid_date
+                          ? new Date(order.paid_date * 1000).toLocaleString()
+                          : '未付款'}
+                      </td>
+                      <td>{order.message}</td>
 
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={() => {
-                          openOrderModal(order);
-                        }}
-                      >
-                        查看
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-outline-danger btn-sm ms-md-2 mt-1"
-                        onClick={() => {
-                          openDeleteModal(order);
-                        }}
-                      >
-                        刪除
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          onClick={() => {
+                            openOrderModal(order);
+                          }}
+                        >
+                          查看
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger btn-sm ms-md-2 mt-1"
+                          onClick={() => {
+                            openDeleteModal(order);
+                          }}
+                        >
+                          刪除
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
           </table>
         </div>
 

@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { fetchOrder, payOrder } from '../../apis';
 
 export default function Checkout() {
   const { orderId } = useParams();
@@ -10,27 +10,19 @@ export default function Checkout() {
   const [isPaid, setIsPaid] = useState(false);
 
   const getOrder = async (orderId) => {
-    const res = await axios.get(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`,
-    );
+    const res = await fetchOrder(orderId);
     console.log('取得訂單成功', res);
     setOrderData(res.data.order);
   };
 
   const handlePaidSubmit = async (orderId) => {
     setIsLoading(true);
-    const paid = {
-      success: isPaid,
-    };
     try {
-      const res = await axios.post(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/pay/${orderId}`,
-        paid,
-      );
+      const res = await payOrder(orderId, isPaid);
       console.log('付款完成', res);
       setIsPaid(true);
     } catch (err) {
-      console.log('付款失敗', err);
+      console.error('付款失敗', err);
     } finally {
       setIsLoading(false);
     }

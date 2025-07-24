@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import {
   handleErrorMessage,
   handleSuccessMessage,
   MessageContext,
 } from '../store/messageStore';
+import { addAdminCoupon, updateAdminCoupon } from '../apis';
 
 export default function CouponModal({
   closeModal,
@@ -21,6 +21,8 @@ export default function CouponModal({
   });
   const [, dispatch] = useContext(MessageContext);
   const [date, setDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     if (['percent'].includes(name)) {
@@ -58,23 +60,24 @@ export default function CouponModal({
   }, [type, tempCoupon]);
 
   const submit = async () => {
-    let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon`;
-    let method = 'post';
-    if (type === 'edit') {
-      api = `v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon/${tempCoupon.id}`;
-      method = 'put';
-    }
+    setIsLoading(true);
     try {
-      const res = await axios[method](api, {
-        data: { ...tempData, due_date: date.getTime() },
-      });
-      console.log(res);
-      handleSuccessMessage(dispatch, res);
+      if (type === 'edit') {
+        const res = await updateAdminCoupon(tempCoupon.id, tempData, date);
+        console.log('優惠卷更新成功', res);
+        handleSuccessMessage(dispatch, res);
+      } else {
+        const res = await addAdminCoupon(tempData, date);
+        console.log('優惠卷新增成功', res);
+        handleSuccessMessage(dispatch, res);
+      }
       closeModal();
       getCoupons();
     } catch (err) {
       console.log(err.response.data.message);
       handleErrorMessage(dispatch, err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -192,8 +195,9 @@ export default function CouponModal({
                 type="button"
                 className="btn btn-primary"
                 onClick={submit}
+                disabled={isLoading}
               >
-                儲存
+                {isLoading ? 'loading...' : '儲存'}
               </button>
             </div>
           </div>

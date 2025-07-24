@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { Modal } from 'bootstrap';
 import CouponModal from '../../components/CouponModal';
 import DeleteModal from '../../components/DeleteModal';
@@ -9,12 +8,15 @@ import {
   handleSuccessMessage,
   MessageContext,
 } from '../../store/messageStore';
+import { deleteAdminCoupon, fetchAdminCoupons } from '../../apis';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 export default function AdminCoupons() {
   const [coupons, setCoupons] = useState([]);
   const [pagination, setPagination] = useState({});
   const [type, setType] = useState('create');
   const [tempCoupon, setTempCoupon] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [, dispatch] = useContext(MessageContext);
   const couponModalRef = useRef(null);
   const deleteModalRef = useRef(null);
@@ -30,16 +32,17 @@ export default function AdminCoupons() {
   }, []);
 
   const getCoupons = async (page = 1) => {
+    setIsLoading(true);
     try {
-      //領取產品列表
-      const res = await axios.get(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupons?page=${page}`,
-      );
+      const res = await fetchAdminCoupons(page);
       const couponsList = res.data.coupons;
       setCoupons(couponsList);
       setPagination(res.data.pagination);
+      console.log('套用優惠卷成功', res);
     } catch (err) {
-      console.error('抓產品資料失敗', err);
+      console.error('套用優惠卷失敗', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,9 +64,7 @@ export default function AdminCoupons() {
 
   const deleteCoupon = async (id) => {
     try {
-      const res = await axios.delete(
-        `v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon/${id}`,
-      );
+      const res = await deleteAdminCoupon(id);
       if (res.data.success) {
         handleSuccessMessage(dispatch, res);
         getCoupons();
@@ -74,6 +75,7 @@ export default function AdminCoupons() {
       handleErrorMessage(dispatch, err);
     }
   };
+
   return (
     <>
       <div className="admin-cont">
@@ -104,6 +106,7 @@ export default function AdminCoupons() {
             </button>
           </div>
         </div>
+
         <div className="table-group">
           <table className="table">
             <thead>
@@ -120,46 +123,58 @@ export default function AdminCoupons() {
                 <th scope="col">編輯</th>
               </tr>
             </thead>
-            <tbody>
-              {coupons.map((coupon) => {
-                return (
-                  <tr key={coupon.id}>
-                    <td>{coupon.title}</td>
-                    <td>{coupon.percent}</td>
-                    <td>{`${new Date(coupon.due_date)
-                      .getFullYear()
-                      .toString()}-${(new Date(coupon.due_date).getMonth() + 1)
-                      .toString()
-                      .padStart(2, 0)}-${new Date(coupon.due_date)
-                      .getDate()
-                      .toString()
-                      .padStart(2, 0)}`}</td>
-                    <td>{coupon.code}</td>
-                    <td>{coupon.is_enabled ? '啟用' : '未啟用'}</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={() => {
-                          openCouponModal('edit', coupon);
-                        }}
-                      >
-                        編輯
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-outline-danger btn-sm ms-md-2 mt-1"
-                        onClick={() => {
-                          openDeleteModal(coupon);
-                        }}
-                      >
-                        刪除
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+            {isLoading ? (
+              <tbody>
+                <tr>
+                  <td colspan="6">
+                    <LoadingAnimation />
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
+              <tbody>
+                {coupons.map((coupon) => {
+                  return (
+                    <tr key={coupon.id}>
+                      <td>{coupon.title}</td>
+                      <td>{coupon.percent}</td>
+                      <td>{`${new Date(coupon.due_date)
+                        .getFullYear()
+                        .toString()}-${(
+                        new Date(coupon.due_date).getMonth() + 1
+                      )
+                        .toString()
+                        .padStart(2, 0)}-${new Date(coupon.due_date)
+                        .getDate()
+                        .toString()
+                        .padStart(2, 0)}`}</td>
+                      <td>{coupon.code}</td>
+                      <td>{coupon.is_enabled ? '啟用' : '未啟用'}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          onClick={() => {
+                            openCouponModal('edit', coupon);
+                          }}
+                        >
+                          編輯
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger btn-sm ms-md-2 mt-1"
+                          onClick={() => {
+                            openDeleteModal(coupon);
+                          }}
+                        >
+                          刪除
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
           </table>
         </div>
 

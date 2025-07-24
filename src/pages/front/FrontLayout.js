@@ -1,25 +1,24 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ScrollTopButton from '../../components/ScrollTopButton';
+import { fetchCart } from '../../apis';
 
 export default function FrontLayout() {
   const [cartData, setCartData] = useState({});
   const navigate = useNavigate();
+
   const login = () => {
     navigate('/admin/products');
   };
 
   const getCart = async () => {
     try {
-      const res = await axios.get(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
-      );
+      const res = await fetchCart();
       console.log('取得購物車成功', res);
       setCartData(res.data.data);
     } catch (err) {
-      console.log('取得購物車', err);
+      console.error('取得購物車失敗', err);
     }
   };
 
