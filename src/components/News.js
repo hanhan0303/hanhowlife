@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import couponBg from '../assets/coupon-alert.jpg';
+
 export default function News() {
   const [newsModalShow, setNewsModalShow] = useState(false);
   const [newsHide, setNewsHide] = useState(false);
@@ -36,6 +38,7 @@ export default function News() {
 
   return (
     <>
+      <img src={couponBg} style={{ display: 'none' }} alt="preload" />
       <div className={`coupon-news ${newsHide ? 'd-none' : ''}`}>
         <div className="news">
           <div className="newsCont">
@@ -71,7 +74,10 @@ export default function News() {
               </button>
             </div>
             <div className="newsModal-body">
-              <div className="img-couponAlert d-flex flex-column justify-content-center align-items-center text-white">
+              <div
+                className="img-couponAlert d-flex flex-column justify-content-center align-items-center text-white"
+                style={{ backgroundImage: `url(${couponBg})` }}
+              >
                 <p className="bg-secondary bg-opacity-50 text-center fw-bold p-3 py-4 mb-3">
                   歡慶 HanHowLife 盛大開幕
                   <br /> 全館結帳不限金額，立即享 8 折優惠！
@@ -80,28 +86,10 @@ export default function News() {
                   type="button"
                   className="btn btn-info py-2 px-5 text-white"
                   onClick={handleCopyCode}
+                  style={{ backgroundColor: copied ? '#df5e4b' : '#d5978e' }}
                 >
-                  複製優惠碼
+                  {copied ? '優惠碼已複製' : '複製優惠碼'}
                 </button>
-                {copied && (
-                  <div
-                    style={{
-                      position: 'fixed',
-                      top: '20px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      backgroundColor: '#000',
-                      color: '#fff',
-                      padding: '10px 20px',
-                      borderRadius: '999px',
-                      fontSize: '14px',
-                      zIndex: 9999,
-                      opacity: 0.9,
-                    }}
-                  >
-                    🎉 優惠碼已複製！
-                  </div>
-                )}
               </div>
             </div>
           </div>
