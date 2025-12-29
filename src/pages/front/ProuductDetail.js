@@ -14,6 +14,7 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [mainIndex, setMainIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [quantityMessage, setQuantityMessage] = useState(false);
 
   //圖片陣列邏輯
   const allImages = useMemo(() => {
@@ -22,6 +23,7 @@ export default function ProductDetail() {
 
   const addToCart = async () => {
     const cartQuantity = Number(inputRef.current.value || 1);
+
     setIsLoading(true);
     try {
       await addCartItem(product.id, cartQuantity);
@@ -136,13 +138,27 @@ export default function ProductDetail() {
                 inputMode="numeric"
                 defaultValue={1}
                 ref={inputRef}
+                onChange={function (e) {
+                  let targetNum = e.target.value;
+                  if (targetNum <= 0) {
+                    setQuantityMessage(true);
+                  } else if (targetNum > 30) {
+                    setQuantityMessage(true);
+                  } else {
+                    setQuantityMessage(false);
+                  }
+                }}
               />
 
               <button
                 className="product-addBtn btn btn-primary col-12 col-md-7 ms-md-2 p-3 mt-3 mt-md-0"
                 type="button"
                 onClick={() => addToCart()}
-                disabled={isLoading}
+                disabled={isLoading || quantityMessage}
+                style={{
+                  cursor: quantityMessage ? 'not-allowed' : 'pointer',
+                  backgroundColor: quantityMessage ? '#919090ff' : '',
+                }}
               >
                 <span className={` ${isLoading ? 'd-none fade' : 'show'}`}>
                   加入購物車
@@ -156,6 +172,13 @@ export default function ProductDetail() {
                 </div>
               </button>
             </div>
+            {quantityMessage ? (
+              <small className="fs-7 ms-2 text-danger quantity-message">
+                商品數量不可小於1或大於30
+              </small>
+            ) : (
+              ''
+            )}
           </div>
         </div>
         {/* Product Description 注意事項 */}
