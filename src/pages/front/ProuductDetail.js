@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link, useOutletContext, useParams } from 'react-router-dom';
 import InfoIcon from '../../assets/info-icon.png';
 import SwiperPerView from '../../components/SwiperPerView';
@@ -7,44 +7,55 @@ import LoadingAnimation from '../../components/LoadingAnimation';
 import { addCartItem, fetchProduct } from '../../apis';
 
 export default function ProductDetail() {
-  const [product, setProduct] = useState(null);
   const { id } = useParams();
+  const { getCart } = useOutletContext();
+  const inputRef = useRef(null);
+
+  const [product, setProduct] = useState(null);
   const [mainIndex, setMainIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const inputRef = useRef(null);
-  const { getCart } = useOutletContext();
 
-  const handleMouseEnter = (index) => {
-    setMainIndex(index);
-  };
+  //圖片陣列邏輯
+  const allImages = useMemo(() => {
+    return product ? [product.imageUrl, ...(product.imagesUrl || [])] : [];
+  }, [product]);
 
-  const getProduct = async (id) => {
-    try {
-      const res = await fetchProduct(id);
-      setProduct(res.data.product);
-      console.log('用ID取得產品資料成功', res);
-    } catch (err) {
-      console.error('用ID取得產品資料失敗', err);
-    }
-  };
   const addToCart = async () => {
-    const cartQuantity = Number(inputRef.current.value);
-
+    const cartQuantity = Number(inputRef.current.value || 1);
     setIsLoading(true);
     try {
-      const res = await addCartItem(product.id, cartQuantity);
-      console.log('加入購物車成功', res);
+      await addCartItem(product.id, cartQuantity);
       getCart();
-      setIsLoading(false);
     } catch (err) {
       console.error('加入購物車失敗', err);
+    } finally {
       setIsLoading(false);
     }
   };
-  console.log('data.product', product);
+
+  // 取得產品資料 (含防止 Race Condition 邏輯)
   useEffect(() => {
-    window.scrollTo(0, 0);
-    getProduct(id);
+    let isIgnore = false;
+
+    const getProduct = async () => {
+      setProduct(null);
+      setMainIndex(0);
+      window.scrollTo(0, 0);
+
+      try {
+        const res = await fetchProduct(id);
+        if (!isIgnore) {
+          setProduct(res.data.product);
+        }
+      } catch (err) {
+        console.error('用ID取得產品資料失敗', err);
+      }
+    };
+
+    getProduct();
+    return () => {
+      isIgnore = true;
+    }; // 清理函式
   }, [id]);
 
   if (!product)
@@ -56,7 +67,7 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div className="min-height">
+      <div className="min-height" key={id}>
         {/* Product Details 商品圖片內容*/}
         <div className="product container row g-0 px-md-3 mx-auto">
           <div className="product-photos col-md-6 row g-0 align-self-start p-3 p-md-0">
@@ -64,27 +75,26 @@ export default function ProductDetail() {
               <span
                 className="photo-img"
                 style={{
-                  backgroundImage: `url(${product?.imageUrl})`,
+                  backgroundImage: `url(${allImages[mainIndex] || ''})`,
                 }}
               />
             </div>
-            {Array.isArray(product?.imagesUrl) &&
-              product.imagesUrl.slice(0, 3).map((url, index) => (
-                <div
-                  className={`photo-sm col-4 ${
-                    mainIndex === index ? 'active' : ''
-                  }`}
-                  key={index}
-                  onMouseEnter={() => handleMouseEnter(index)}
-                >
-                  <span
-                    className="photo-img"
-                    style={{
-                      backgroundImage: `url(${url})`,
-                    }}
-                  ></span>
-                </div>
-              ))}
+            {allImages.slice(0, 4).map((url, index) => (
+              <div
+                className={`photo-sm col-3 ${
+                  mainIndex === index ? 'active' : ''
+                }`}
+                key={index}
+                onClick={() => setMainIndex(index)}
+              >
+                <span
+                  className="photo-img"
+                  style={{
+                    backgroundImage: `url(${url})`,
+                  }}
+                ></span>
+              </div>
+            ))}
           </div>
           <div className="product-content col-md-6 text-center text-md-start">
             <div className="path d-block mb-4 fs-7">
