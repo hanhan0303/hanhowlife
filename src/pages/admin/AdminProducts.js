@@ -149,7 +149,7 @@ export default function AdminProducts() {
             {isLoading ? (
               <tbody>
                 <tr>
-                  <td colspan="5">
+                  <td colSpan="5">
                     <LoadingAnimation />
                   </td>
                 </tr>

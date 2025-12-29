@@ -109,7 +109,7 @@ export default function AdminOrders() {
             {isLoading ? (
               <tbody>
                 <tr>
-                  <td colspan="7">
+                  <td colSpan="7">
                     <LoadingAnimation />
                   </td>
                 </tr>

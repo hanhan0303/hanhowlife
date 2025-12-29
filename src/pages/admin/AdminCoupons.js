@@ -126,7 +126,7 @@ export default function AdminCoupons() {
             {isLoading ? (
               <tbody>
                 <tr>
-                  <td colspan="6">
+                  <td colSpan="6">
                     <LoadingAnimation />
                   </td>
                 </tr>
