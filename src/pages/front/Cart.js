@@ -7,12 +7,12 @@ export default function Cart() {
   const [loadingItems, setLoadingItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [removingItemId, setRemovingItemId] = useState(null);
+  const [removingItemAll, setRemovingItemAll] = useState(false);
 
   const removeCartItem = async (id) => {
     setRemovingItemId(id);
     try {
-      const res = await deleteCartItem(id);
-      console.log('刪除購物車品項成功', res);
+      await deleteCartItem(id);
       getCart();
     } catch (err) {
       console.error('刪除購物車品項失敗', err);
@@ -22,10 +22,10 @@ export default function Cart() {
   };
 
   const removeAllItem = async () => {
+    setRemovingItemAll(true);
     setIsLoading(true);
     try {
-      const res = await deleteCartAll();
-      console.log('移除購物車所有商品', res);
+      await deleteCartAll();
       getCart();
     } catch (err) {
       console.error('移除購物車所有商品失敗', err);
@@ -78,7 +78,9 @@ export default function Cart() {
                   return (
                     <div
                       className={`cart-item d-flex mt-4 bg-light ${
-                        removingItemId === item.id ? 'remove-loading' : ''
+                        removingItemId === item.id || removingItemAll
+                          ? 'remove-loading'
+                          : ''
                       }`}
                       key={item.id}
                     >
