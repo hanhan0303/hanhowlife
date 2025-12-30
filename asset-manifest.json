@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/hanhowlife/static/css/main.45186c33.css",
-    "main.js": "/hanhowlife/static/js/main.34334e0f.js",
+    "main.js": "/hanhowlife/static/js/main.1f5dd6a8.js",
     "static/js/453.22db2aab.chunk.js": "/hanhowlife/static/js/453.22db2aab.chunk.js",
     "static/media/coupon-alert.jpg": "/hanhowlife/static/media/coupon-alert.918aa751bfd14d7a6ce5.jpg",
     "static/media/index-natural-ingredients.jpg": "/hanhowlife/static/media/index-natural-ingredients.0f52bae22ae84572f3ec.jpg",
@@ -15,11 +15,11 @@
     "static/media/admin-bg.png": "/hanhowlife/static/media/admin-bg.44d0b0ef3e68997c7aaa.png",
     "index.html": "/hanhowlife/index.html",
     "main.45186c33.css.map": "/hanhowlife/static/css/main.45186c33.css.map",
-    "main.34334e0f.js.map": "/hanhowlife/static/js/main.34334e0f.js.map",
+    "main.1f5dd6a8.js.map": "/hanhowlife/static/js/main.1f5dd6a8.js.map",
     "453.22db2aab.chunk.js.map": "/hanhowlife/static/js/453.22db2aab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.45186c33.css",
-    "static/js/main.34334e0f.js"
+    "static/js/main.1f5dd6a8.js"
   ]
 }
